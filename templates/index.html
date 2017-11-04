@@ -1,0 +1,97 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='index.css')}}">
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<div id="main-container">
+			<div id="header">
+				<div id="icons">
+					<i class="fa fa-info-circle" aria-hidden="true" onclick="showInfo()"></i>
+					<a href="https://github.com/greg-rychlewski/tic-tac-toe-ai" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+				</div>
+				<div id="title">Temporal Difference Tic Tac Toe</div>
+			</div>
+
+			<div id="board">
+				<div class="box" data-row="1" data-col="1"><span></span></div>
+				<div class="box" data-row="1" data-col="2"><span></span></div>
+				<div class="box" data-row="1" data-col="3"><span></span></div>
+				<div class="box" data-row="2" data-col="1"><span></span></div>
+				<div class="box" data-row="2" data-col="2"><span></span></div>
+				<div class="box" data-row="2" data-col="3"><span></span></div>
+				<div class="box" data-row="3" data-col="1"><span></span></div>
+				<div class="box" data-row="3" data-col="2"><span></span></div>
+				<div class="box" data-row="3" data-col="3"><span></span></div>
+				<div id="message"> </div>
+			</div>
+
+			<div id="game-menu">
+				<div id="game-buttons">
+					<div id="start-button" class="game-button">Play Game</div> 
+					<div id="simulate-button" class="game-button">Simulate</div>
+					<div id="reset-button" class="game-button">Reset AI</div>
+					<div class="clear"></div>
+				</div>
+
+				<div id="game-options">
+					<div class="game-options-header">
+						Game Options
+					</div>
+					<div class="game-options-body">
+						<div class="game-option-group">
+							<div class="game-option-name">
+								First Move:
+							</div>
+							<div class="game-option-input">
+								<input type="radio" name="comp-move" value="x" checked> AI
+								<input type="radio" name="comp-move" value="o"> Human
+							</div>
+						</div>
+						<div class="game-option-group">
+							<div class="game-option-name">
+								No. Simulated Games: 
+							</div>
+							<div class="game-option-input">
+								<input id="simulate-num" type="number" min="1", max="500">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="info">
+				<i class="fa fa-times" onclick="hideInfo()"></i>
+				<div class="clear"></div>
+				<div class="info-group">
+					<div class="info-header">
+						Temporal Difference Learning
+					</div>
+					<div class="info-body">
+						<ul>
+							<li>Initially, the AI moves randomly unless its next move results in a win.</li>
+							<li>Moves leading to a win will become preferred in the future. Similarly, moves leading to a loss or a tie will be avoided, if possible.</li>
+							<li>The AI will sometimes make an exploratory move. These moves will ignore what has been learned in the previous games in order to explore alternate strategies.</li>
+							<li> Click <a href="https://en.wikipedia.org/wiki/Temporal_difference_learning" target="_blank">here</a> for more information on temporal difference learning.</li>
+						</ul>
+					</div>
+				</div>
+				<div class="info-group">
+					<div class="info-header">
+						Technologies Used
+					</div>
+					<div class="info-body">
+						<ul>
+							<li>AI Logic: Python</li>
+							<li>Frontend: Javascript, HTML, and CSS</li>
+							<li>Backend: Python Flask Framework</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="{{url_for('static', filename='index.js')}}"></script>
+	</body>
+</html>
