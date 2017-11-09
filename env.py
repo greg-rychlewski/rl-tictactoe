@@ -1,1 +1,1 @@
-key = "A0Zr98j/3yX R~XHH!jmN]LWX/,?RT"
+key = "testkey"
