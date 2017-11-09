@@ -5,6 +5,11 @@
 	font-family: "Helvetica";
 	color: #444;
 	-webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
+	-webkit-touch-callout: none; 
+    -webkit-user-select: none;
+       -moz-user-select: none; 
+        -ms-user-select: none;
+            user-select: none; 
 }
 
 body{
@@ -233,24 +238,31 @@ a{
 	padding-left: 25px;
 }
 
-.simulating:after {
+.simulating:after{
 	text-align: left;
 	overflow: hidden;
 	display: inline-block;
 	vertical-align: bottom;
 	-webkit-animation: ellipsis steps(4,end) 2s infinite;
+	-moz-animation: ellipsis steps(4,end) 2s infinite;
 	animation: ellipsis steps(4,end) 2s infinite;
 	content: "\2026"; 
 	width: 0px;
 }
 
-@keyframes ellipsis {
+@keyframes ellipsis{
 	to {
 		width: 1.25em;
 	}
 }
 
-@-webkit-keyframes ellipsis {
+@-webkit-keyframes ellipsis{
+	to {
+		width: 1.25em;
+	}
+}
+
+@-moz-keyframes ellipsis{
 	to {
 		width: 1.25em;
 	}

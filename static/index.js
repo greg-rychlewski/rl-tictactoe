@@ -71,6 +71,8 @@ function clearMessages(messages){
 		var message = messages[i];
 		document.getElementById(message).innerHTML = "";
 	}
+
+	messageInfo.classList.add("hidden");
 }
 
 function clearBoard(){
