@@ -209,10 +209,12 @@ def computerTurn(currentBoard, player):
 def learnFromLoss(player):
     previousTree = gamevars.boardTree[player].search(gamevars.previousBoard[player])
     previousTree.prob += gamevars.learningRate*(gamevars.lossProb - previousTree.prob)
+    saveTree(player)
 
 def learnFromTie(player):
     previousTree = gamevars.boardTree[player].search(gamevars.previousBoard[player])
     previousTree.prob += gamevars.learningRate*(gamevars.tieProb - previousTree.prob)
+    saveTree(player)
 
 # End-game message
 def result(board):
@@ -232,8 +234,8 @@ def saveTree(player):
 def resetAI():
     for player in gamevars.players:
         gamevars.computer = player
-        gamevars.human = gamevars.players[gamevars.players != gamevars.computer]
-        gamevars.boardTree[player] = Tree(["---------"], 0.5)
+        gamevars.human = [player for i, player in enumerate(gamevars.players) if player != gamevars.computer][0]
+        gamevars.boardTree[player] = Tree(["---------"], gamevars.neutralProb)
         enumBoards(gamevars.boardTree[player], gamevars.boardTree[player], "x")
         saveTree(player) 
 

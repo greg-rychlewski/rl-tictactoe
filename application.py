@@ -41,7 +41,7 @@ def initialize():
 	# Save player symbols into session cookie
 	compSymbol = request.form["comp-symbol"]
 	session["computer"] = compSymbol
-	session["human"] = gamevars.players[gamevars.players != compSymbol]
+	session["human"] = [player for i, player in enumerate(gamevars.players) if player != compSymbol][0]
 	session["previousBoard"] = {"x": None, "o": None}
 
 	# Set global variables
@@ -62,7 +62,6 @@ def next():
 	# Erase previous board history if new simulation game
 	if erase == "true":
 		session["previousBoard"] = {"x": None, "o": None}
-		gamevars.setPreviousBoard(session)
 
 	# Get new board after computer's move
 	gamevars.setPreviousBoard(session)
@@ -75,7 +74,7 @@ def next():
 
 	# If simulated game, update other computer's last probability
 	if simulation == "true" and gameOver:
-		opponent = gamevars.players[gamevars.players != compSymbol]
+		opponent = [player for i, player in enumerate(gamevars.players) if player != compSymbol][0]
 
 		if tictactoe.win(newBoard, compSymbol):
 			tictactoe.learnFromLoss(opponent)
@@ -116,6 +115,37 @@ def loss():
 def tie():
 	compSymbol = request.form["comp-symbol"]
 	tictactoe.learnFromTie(compSymbol)
+
+	return json.dumps({})
+
+# Batch process simulated games
+@application.route("/batch-sim", methods=["POST"])
+def batch():
+	# Parse data
+	numGames = int(request.form["num-games"])
+
+	# Run simulations
+	for i in range(numGames):
+		# Clear previous histories
+		session["previousBoard"] = {"x": None, "o": None}
+		gamevars.setPreviousBoard(session)
+
+		# Restart game
+		compSymbol = "x"
+		currentBoard = "---------"
+
+		while True:
+			currentBoard = tictactoe.computerTurn(currentBoard, compSymbol)
+			if tictactoe.gameOver(currentBoard):
+				break
+			else:
+				opponent = compSymbol
+				compSymbol = [player for i, player in enumerate(gamevars.players) if player != compSymbol][0]
+		
+		if tictactoe.win(currentBoard, compSymbol):
+			tictactoe.learnFromLoss(opponent)
+		elif tictactoe.tie(currentBoard):
+			tictactoe.learnFromTie(opponent)
 
 	return json.dumps({})
 

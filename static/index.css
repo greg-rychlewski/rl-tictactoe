@@ -7,12 +7,16 @@
 	-webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
 }
 
+body{
+	background-color: #f3f3f3;
+}
+
 .clear{
 	clear: both;
 }
 
-body{
-	background-color: #f3f3f3;
+.hidden{
+	opacity: 0;
 }
 
 #main-container{
@@ -47,11 +51,12 @@ body{
 }
 
 /* Messages */
-#message{
+#message-box{
 	cursor: default;
 	height: 20px;
-	width: 100%;
+	width: 110%;
 	text-align: center;
+	left: -5%;
 	float: left;
 	color: #444;
 	margin-top: 25px;
@@ -62,8 +67,14 @@ body{
 	font-weight: bold;
 }
 
-/* Info Page */
-#info{
+#message-info{
+	font-size: 1.1em;
+	padding-left: 5px;
+	cursor: pointer;
+}
+
+/* Info Pages */
+#game-info, #prob-info{
 	background-color: rgba(0, 0, 0, 0.9);
 	width: 100%;
 	height: 100%;
@@ -75,7 +86,7 @@ body{
 	cursor: default;
 }
 
-#info i{
+#game-info i, #prob-info i{
 	font-size: 1.25em;
 	color: #ccc;
 	float: right;
@@ -84,13 +95,13 @@ body{
 	cursor: pointer;
 }
 
-.info-group{
+.game-info-group, .prob-info-group{
 	margin-top: 15px;
 	margin-bottom: 15px;
 	font-size: 0.9em;
 }
 
-.info-header{
+.game-info-header, .prob-info-header{
 	background-color: #444;
 	text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.75);
 	color: white;
@@ -98,7 +109,7 @@ body{
 	padding: 5px;
 }
 
-.info-body ul li, .info-body ol li{
+.game-info-body ul li, .prob-info-body ul li{
 	color: #ccc;
 }
 
@@ -217,6 +228,34 @@ a{
 	transition: all 0.3s ease-out;
 }
 
+.simulating{
+	text-align: left;
+	padding-left: 25px;
+}
+
+.simulating:after {
+	text-align: left;
+	overflow: hidden;
+	display: inline-block;
+	vertical-align: bottom;
+	-webkit-animation: ellipsis steps(4,end) 2s infinite;
+	animation: ellipsis steps(4,end) 2s infinite;
+	content: "\2026"; 
+	width: 0px;
+}
+
+@keyframes ellipsis {
+	to {
+		width: 1.25em;
+	}
+}
+
+@-webkit-keyframes ellipsis {
+	to {
+		width: 1.25em;
+	}
+}
+
 /* Game Options */
 #game-options{
 	border: none;
@@ -293,8 +332,8 @@ a{
 		margin-bottom: 20px;
 	}
 
-	/* Info Page */
-	#info i{
+	/* Info Pages */
+	#game-info i, #prob-info i{
 		font-size: 0.9em;
 		color: #ccc;
 		float: right;
@@ -303,7 +342,7 @@ a{
 		cursor: pointer;
 	}
 
-	.info-group{
+	.game-info-group, .prob-info-group{
 		margin-top: 15px;
 		margin-bottom: 15px;
 		font-size: 0.7em;
@@ -330,20 +369,33 @@ a{
 	}
 
 	/* Messages */
-	#message{
+	#message-box{
 		cursor: default;
 		height: 20px;
-		width: 100%;
+		width: 110%;
 		text-align: center;
+		left: -5%;
 		float: left;
 		color: #444;
 		margin-top: 25px;
 		font-size: 0.7em;
 	}
 
+	#message-info{
+		font-size: 1em;
+	}
+
 	/* Game Buttons */
+	#start-button{
+		margin-right: 7.5%;
+	}
+
+	#simulate-button{
+		margin-right: 7.5%;
+	}
+
 	.game-button{
-		width: 27%;
+		width: 28%;
 		font-size: 0.8em;
 		text-align: center;
 		padding: 10px 5px;
@@ -355,6 +407,11 @@ a{
 		float: left;
 		box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.4);
 		text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.75);
+	}
+
+	.simulating{
+		text-align: left;
+		padding-left: 7px;
 	}
 
 	/* Game Options */
@@ -377,8 +434,8 @@ a{
 	}
 
 	.game-option-name{
-		width: 53%;
-		padding-right: 5px;
+		width: 48%;
+		padding-right: 1px;
 		display: inline-block;
 	}
 
@@ -434,20 +491,34 @@ a{
 	}
 
 	/* Messages */
-	#message{
+	#message-box{
 		cursor: default;
 		height: 20px;
-		width: 100%;
+		width: 110%;
 		text-align: center;
 		float: left;
+		left: -5%;
 		color: #444;
 		margin-top: 25px;
 		font-size: 0.56em;
 	}
 
+	#message-info{
+		font-size: 1em;
+		padding-left: 3px;
+	}
+
 	/* Game Buttons */
+	#start-button{
+		margin-right: 6.5%;
+	}
+
+	#simulate-button{
+		margin-right: 6.5%;
+	}
+
 	.game-button{
-		width: 27%;
+		width: 29%;
 		font-size: 0.65em;
 		text-align: center;
 		padding: 10px 5px;
@@ -459,6 +530,11 @@ a{
 		float: left;
 		box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.4);
 		text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.75);
+	}
+
+	.simulating{
+		text-align: left;
+		padding-left: 7px;
 	}
 
 	/* Game Options */
@@ -485,5 +561,6 @@ a{
 	}
 
 	#simulate-num{
-		width: 40px;
+		width: 45px;
 	}
+}

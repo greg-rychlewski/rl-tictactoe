@@ -8,7 +8,7 @@
 		<div id="main-container">
 			<div id="header">
 				<div id="icons">
-					<i class="fa fa-info-circle" aria-hidden="true" onclick="showInfo()"></i>
+					<i class="fa fa-info-circle" aria-hidden="true" onclick="showGameInfo()"></i>
 					<a href="https://github.com/greg-rychlewski/rl-tictactoe" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
 				</div>
 				<div id="title">Temporal Difference Tic Tac Toe</div>
@@ -24,7 +24,11 @@
 				<div class="box" data-row="3" data-col="1"><span></span></div>
 				<div class="box" data-row="3" data-col="2"><span></span></div>
 				<div class="box" data-row="3" data-col="3"><span></span></div>
-				<div id="message"> </div>
+			</div>
+
+			<div id="message-box">
+				<span id="message"></span>
+				<i id="message-info" class="fa fa-question-circle hidden" aria-hidden="true" onclick="showProbInfo()"></i>
 			</div>
 
 			<div id="game-menu">
@@ -51,6 +55,15 @@
 						</div>
 						<div class="game-option-group">
 							<div class="game-option-name">
+								Simulation Mode:
+							</div>
+							<div class="game-option-input">
+								<input type="radio" name="simulate-mode" value="online" checked> Online
+								<input type="radio" name="simulate-mode" value="batch"> Batch
+							</div>
+						</div>
+						<div class="game-option-group">
+							<div class="game-option-name">
 								No. Simulated Games: 
 							</div>
 							<div class="game-option-input">
@@ -61,27 +74,49 @@
 				</div>
 			</div>
 
-			<div id="info">
-				<i class="fa fa-times" onclick="hideInfo()"></i>
+
+			<div id="prob-info">
+				<i class="fa fa-times" onclick="hideProbInfo()"></i>
 				<div class="clear"></div>
-				<div class="info-group">
-					<div class="info-header">
+				<div class="prob-info-group">
+					<div class="prob-info-header">
+						AI's Probability of Winning
+					</div>
+					<div class="prob-info-body">
+						<ul>
+							<li>The AI estimates its probability of winning based on its playing history.</li>
+							<li>Board configurations leading to wins will have their probability increased, while those leading to losses will have
+							    their probability decreased.</li>
+							<li>Probabilities are updated in real-time. If multiple people are visiting this site at the same time they will update
+							    each other's probabilities.</li>
+							<li>If the AI is reset, all of its probabilities will go back to neutral (50%).</li>
+							<li>The AI can be quickly retrained by running simulations in batch mode.</li> 
+						<ul>
+					</div>
+				</div>
+			</div>
+
+			<div id="game-info">
+				<i class="fa fa-times" onclick="hideGameInfo()"></i>
+				<div class="clear"></div>
+				<div class="game-info-group">
+					<div class="game-info-header">
 						Temporal Difference Learning
 					</div>
-					<div class="info-body">
+					<div class="game-info-body">
 						<ul>
 							<li>Initially, the AI moves randomly unless its next move results in a win.</li>
-							<li>Moves leading to a win will become preferred in the future. Similarly, moves leading to a loss or a tie will be avoided, if possible.</li>
+							<li>Moves leading to a win will become preferred in the future. Similarly, moves leading to a loss will be avoided.</li>
 							<li>The AI will sometimes make an exploratory move. These moves will ignore what has been learned in the previous games in order to explore alternate strategies.</li>
 							<li> Click <a href="https://en.wikipedia.org/wiki/Temporal_difference_learning" target="_blank">here</a> for more information on temporal difference learning.</li>
 						</ul>
 					</div>
 				</div>
-				<div class="info-group">
-					<div class="info-header">
+				<div class="game-info-group">
+					<div class="game-info-header">
 						Technologies Used
 					</div>
-					<div class="info-body">
+					<div class="game-info-body">
 						<ul>
 							<li>AI Logic: Python</li>
 							<li>Frontend: Javascript, HTML, and CSS</li>

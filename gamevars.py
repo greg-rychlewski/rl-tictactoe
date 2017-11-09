@@ -60,7 +60,7 @@ previousBoard = {"x": None, "o": None}
 # Probabilities for winning from a board layout
 winProb = 1
 lossProb = 0
-tieProb = 0.25
+tieProb = 0.5
 neutralProb = 0.5
 
 # Game parameters

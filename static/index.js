@@ -11,15 +11,19 @@ var currentBoard = "---------";
 var gameButtons = ["start-button", "reset-button", "simulate-button"];
 var buttonFunctions = {"start-button": startGame, "reset-button": resetAI, "simulate-button": startSimulation};
 var messageBoxes = ["message"];
-var resetMessageStart = "Resetting AI...";
+var resetMessageStart = "Resetting AI";
 var resetMessageDone = "AI Successfully Reset";
+var simMode;
 var numGames;
 var gameNum;
-var maxGames = 500;
+var maxGamesOnline = 50;
+var maxGamesBatch = 500;
 var stopSim = false;
-var simMessage = "Simulating Game 1...";
+var simMessage = "Simulating Game 1";
+var simMessageBatch = "Simulating";
 var simMessageDone = "Simulations Complete";
 var simMessageCancel = "Simulations Cancelled";
+var messageInfo = document.getElementById("message-info");
 
 ///////////////////////////////////////////////
 //                                           //
@@ -32,7 +36,21 @@ function toPercent(decimal){
 	return (percent)
 }
 
-function showMessage(elementId, msg){
+function showMessage(msg, infoIcon, elementId){
+	if (infoIcon === undefined) {
+		infoIcon = false;
+    }
+
+	if (elementId === undefined) {
+		elementId = "message";
+    }
+
+    if (infoIcon){
+    	messageInfo.classList.remove("hidden");
+    }else{
+    	messageInfo.classList.add("hidden");
+    }
+
 	document.getElementById(elementId).innerHTML = msg;
 }
 
@@ -103,25 +121,39 @@ function enableButtons(buttons){
 	}
 
 	if (document.getElementById("message").innerHTML == resetMessageStart){
-		showMessage("message", resetMessageDone);
+		showMessage(resetMessageDone);
 	}else if (document.getElementById("message").innerHTML == simMessage){
 		if (!stopSim){
-			showMessage("message", simMessageDone);
+			showMessage(simMessageDone);
 		}else{
-			showMessage("message", simMessageCancel);
+			showMessage(simMessageCancel);
 		}
 	}
 }
 
 function toggleSimButton(){
-	var element = document.getElementById("simulate-button");
+	var buttonElement = document.getElementById("simulate-button");
 
-	if (element.innerHTML == "Simulate"){
-		element.innerHTML = "Stop";
-		element.onclick = stopSimulation;
-		element.style.cursor = "pointer";
+	if (buttonElement.innerHTML == "Simulate"){
+		buttonElement.innerHTML = "Stop";
+		buttonElement.onclick = stopSimulation;
+		buttonElement.classList.add("game-button-hover");
+		buttonElement.style.cursor = "pointer";
 	}else{
-		element.innerHTML = "Simulate";
+		buttonElement.innerHTML = "Simulate";
+	}
+}
+
+function toggleBatchButton(){
+	var buttonElement = document.getElementById("simulate-button");
+
+	if (buttonElement.innerHTML == "Simulate"){
+		buttonElement.innerHTML = simMessageBatch;
+		buttonElement.classList.add("simulating");
+		
+	}else{
+		buttonElement.classList.remove("simulating");
+		buttonElement.innerHTML = "Simulate";
 	}
 }
 
@@ -137,13 +169,23 @@ function enablePlayer(){
  	board.style.cursor = "pointer";
 }
 
-function showInfo(){
-	var infoDiv = document.getElementById("info");
+function showGameInfo(){
+	var infoDiv = document.getElementById("game-info");
 	infoDiv.style.display = "inline-block";
 }
 
-function hideInfo(){
-	var infoDiv = document.getElementById("info");
+function hideGameInfo(){
+	var infoDiv = document.getElementById("game-info");
+	infoDiv.style.display = "none";
+}
+
+function showProbInfo(){
+	var infoDiv = document.getElementById("prob-info");
+	infoDiv.style.display = "inline-block";
+}
+
+function hideProbInfo(){
+	var infoDiv = document.getElementById("prob-info");
 	infoDiv.style.display = "none";
 }
 
@@ -211,16 +253,17 @@ function processComputerMove(response){
 	updateBoardComputer(data.board);
 
 	if (!data.over){
-		showMessage("message", "AI thinks it has a <span>" + toPercent(data.msg) + "</span> chance of winning")
+		var probWin = parseFloat(data.msg);
+		showMessage("AI thinks it has a <span>" + toPercent(probWin) + "</span> chance of winning", true);
 		enablePlayer();
 	}else{
 		enableButtons("reset-button");
-		showMessage("message", data.msg);
+		showMessage(data.msg);
 	}
 }
 
 function computerMove(){
-	showMessage("message", "AI Is Thinking...");
+	showMessage("AI Is Thinking...");
 	postRequest("/next-move", "board=" + currentBoard + "&comp-symbol=" + compSymbol + "&erase=false" + "&simulation=false", processComputerMove);
 }
 
@@ -253,11 +296,11 @@ function processPlayerMove(response){
 	 		
 	if (data.over && !data.tie){
 		enableButtons("reset-button");
-		showMessage("message", "Human Wins");
+		showMessage("Human Wins");
 		postRequest("/comp-loss", "comp-symbol=" + compSymbol);
 	}else if (data.over && data.tie){
 		enableButtons("reset-button");
-		showMessage("message", "Tie Game");
+		showMessage("Tie Game");
 		postRequest("/comp-tie", "comp-symbol=" + compSymbol);
 	}else{
 		computerMove();
@@ -281,7 +324,7 @@ function playerMove(e){
 		currentBoard = updateBoardPlayer();
 
 		// Check if game over
-		postRequest("/game-over", "board=" + currentBoard, processPlayerMove)
+		postRequest("/game-over", "board=" + currentBoard, processPlayerMove);
 	}else{
 		enablePlayer();
 	}
@@ -295,8 +338,8 @@ function playerMove(e){
 
 function resetAI(){
 	disableButtons();
-	showMessage("message", resetMessageStart);
-	getRequest("/reset-ai", enableButtons)
+	showMessage(resetMessageStart);
+	getRequest("/reset-ai", enableButtons);
 }
 
 /////////////////////////////////////////////
@@ -309,8 +352,8 @@ function nextSimulatedGame(){
 	clearBoard();
 
 	gameNum++;
-	simMessage = "Simulating Game " + gameNum + "...";
-	showMessage("message", simMessage);
+	simMessage = "Simulating Game " + gameNum;
+	showMessage(simMessage);
 	
 	compSymbol = "x"
 	postRequest("/next-move", "board=" + currentBoard + "&comp-symbol=" + compSymbol + "&erase=true" + "&simulation=true", processSimulationMove);
@@ -354,9 +397,27 @@ function processSimulationMove(response){
 	}
 }
 
+function processBatchSimulation(response){
+	showMessage(simMessageDone);
+	enableButtons();
+	toggleBatchButton();
+}
+
+function batchSimulation(){
+	toggleBatchButton();
+	postRequest("/batch-sim", "num-games=" + numGames, processBatchSimulation);
+}
+
 function startSimulation(){
 	numGames = parseInt(document.getElementById("simulate-num").value);
+	simMode = document.querySelector("input[name='simulate-mode']:checked").value;
 	var errorMessage = "";
+
+	if (simMode == "online"){
+		maxGames = maxGamesOnline;
+	}else{
+		maxGames = maxGamesBatch;
+	}
 
 	if (isNaN(numGames)){
 		errorMessage = "Invalid Number of Games";
@@ -367,15 +428,20 @@ function startSimulation(){
 	}
 	
 	if (errorMessage == ""){
-		gameNum = 0;
 		clearBoard();
 		clearMessages();
 		disablePlayer();
-		disableButtons();
-		toggleSimButton();
-		nextSimulatedGame();
+		disableButtons();	
+
+		if (simMode == "online"){
+			gameNum = 0;
+			toggleSimButton();
+			nextSimulatedGame();
+		}else{
+			batchSimulation();
+		}
 	}else{
-		showMessage("message", errorMessage);
+		showMessage(errorMessage);
 	}
 }
 
@@ -400,7 +466,7 @@ function firstMove(){
 		computerMove();
 	}
 	else{
-		showMessage("message", "Your Move");
+		showMessage("Your Move");
 		enablePlayer();
 	}	
 }
