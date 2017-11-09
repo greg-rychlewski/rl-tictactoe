@@ -3,7 +3,7 @@
 * AI Logic: Python 3.4
 * Frontend: Javascript, HTML, and CSS
 * Backend: Python Flask Framework
-* [Live Demo](rl-tictactoe.us-east-2.elasticbeanstalk.com)
+* [Live Demo](http://rl-tictactoe.us-east-2.elasticbeanstalk.com)
 
 **Temporal Difference Learning**
 ---
