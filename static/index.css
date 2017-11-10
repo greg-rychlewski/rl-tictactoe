@@ -32,7 +32,11 @@ body{
 #title{
 	position: relative;
 	left: 50%;
-	transform: translate(-50%);
+	transform: translateX(-50%);
+	-ms-transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	-o-transform: translateX(-50%);
 	font-size: 1.25em;
 	cursor: default;
 	font-weight: bold;
@@ -49,7 +53,11 @@ body{
 #icons{
 	position: relative;
 	left: 50%;
-	transform: translate(-50%);
+	transform: translateX(-50%);
+	-ms-transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	-o-transform: translateX(-50%);
 	font-size: 1.25em;
 	text-align: center;
 	margin-bottom: 20px;
@@ -137,6 +145,10 @@ a{
 	padding: 0;
 	left: 50%;
 	transform: translateX(-50%);
+	-ms-transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	-o-transform: translateX(-50%);
 	background-color: white;
 }
 
@@ -156,6 +168,10 @@ a{
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
 	font-family: "Helvetica";
 	font-size: 1.75em;
 }
@@ -326,7 +342,11 @@ a{
 	#title{
 		position: relative;
 		left: 50%;
-		transform: translate(-50%);
+		transform: translateX(-50%);
+		-ms-transform: translateX(-50%);
+		-webkit-transform: translateX(-50%);
+		-moz-transform: translateX(-50%);
+		-o-transform: translateX(-50%);
 		font-size: 0.9em;
 		cursor: default;
 		font-weight: bold;
@@ -339,6 +359,10 @@ a{
 		position: relative;
 		left: 50%;
 		transform: translate(-50%);
+		-ms-transform: translateX(-50%);
+		-webkit-transform: translateX(-50%);
+		-moz-transform: translateX(-50%);
+		-o-transform: translateX(-50%);
 		font-size: 1em;
 		text-align: center;
 		margin-bottom: 20px;
@@ -376,6 +400,10 @@ a{
 		left: 50%;
 		top: 50%;
 		transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		-webkit-transform: translate(-50%, -50%);
+		-moz-transform: translate(-50%, -50%);
+		-o-transform: translate(-50%, -50%);
 		font-family: "Helvetica";
 		font-size: 1.25em;
 	}
@@ -469,7 +497,11 @@ a{
 	#title{
 		position: relative;
 		left: 50%;
-		transform: translate(-50%);
+		transform: translateX(-50%);
+		-ms-transform: translateX(-50%);
+		-webkit-transform: translateX(-50%);
+		-moz-transform: translateX(-50%);
+		-o-transform: translateX(-50%);
 		font-size: 0.7em;
 		cursor: default;
 		font-weight: bold;
@@ -481,7 +513,11 @@ a{
 	#icons{
 		position: relative;
 		left: 50%;
-		transform: translate(-50%);
+		transform: translateX(-50%);
+		-ms-transform: translateX(-50%);
+		-webkit-transform: translateX(-50%);
+		-moz-transform: translateX(-50%);
+		-o-transform: translateX(-50%);
 		font-size: 0.8em;
 		text-align: center;
 		margin-bottom: 20px;
@@ -498,6 +534,10 @@ a{
 		left: 50%;
 		top: 50%;
 		transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		-webkit-transform: translate(-50%, -50%);
+		-moz-transform: translate(-50%, -50%);
+		-o-transform: translate(-50%, -50%);
 		font-family: "Helvetica";
 		font-size: 0.8em;
 	}
