@@ -11,7 +11,7 @@ var currentBoard = "---------";
 var gameButtons = ["start-button", "reset-button", "simulate-button"];
 var buttonFunctions = {"start-button": startGame, "reset-button": resetAI, "simulate-button": startSimulation};
 var messageBoxes = ["message"];
-var resetMessageStart = "Resetting AI";
+var resetMessage = "Resetting";
 var resetMessageDone = "AI Successfully Reset";
 var simMode;
 var numGames;
@@ -122,9 +122,7 @@ function enableButtons(buttons){
 		buttonElement.style.cursor = "pointer";
 	}
 
-	if (document.getElementById("message").innerHTML == resetMessageStart){
-		showMessage(resetMessageDone);
-	}else if (document.getElementById("message").innerHTML == simMessage){
+	if (document.getElementById("message").innerHTML == simMessage){
 		if (!stopSim){
 			showMessage(simMessageDone);
 		}else{
@@ -156,6 +154,19 @@ function toggleBatchButton(){
 	}else{
 		buttonElement.classList.remove("simulating");
 		buttonElement.innerHTML = "Simulate";
+	}
+}
+
+function toggleResetButton(){
+	var buttonElement = document.getElementById("reset-button");
+
+	if (buttonElement.innerHTML == "Reset AI"){
+		buttonElement.innerHTML = resetMessage;
+		buttonElement.classList.add("resetting");
+		
+	}else{
+		buttonElement.classList.remove("resetting");
+		buttonElement.innerHTML = "Reset AI";
 	}
 }
 
@@ -319,15 +330,19 @@ function playerMove(e){
 	var row = parseInt(target.getAttribute("data-row"));
 	var boxElement = getBox(row, col);
 	
-	// Check for valid move
-	if (boxElement.innerHTML == ""){
-		// Place symbol in box
-		boxElement.innerHTML = humanSymbol.toUpperCase();
-		currentBoard = updateBoardPlayer();
+	try{
+		// Check for valid move
+		if (boxElement.innerHTML == ""){
+			// Place symbol in box
+			boxElement.innerHTML = humanSymbol.toUpperCase();
+			currentBoard = updateBoardPlayer();
 
-		// Check if game over
-		postRequest("/game-over", "board=" + currentBoard, processPlayerMove);
-	}else{
+			// Check if game over
+			postRequest("/game-over", "board=" + currentBoard, processPlayerMove);
+		}else{
+			enablePlayer();
+		}
+	}catch(err){
 		enablePlayer();
 	}
 }
@@ -338,10 +353,17 @@ function playerMove(e){
 //                                         //
 /////////////////////////////////////////////
 
+function processReset(response){
+	showMessage(resetMessageDone);
+	enableButtons();
+	toggleResetButton();
+}
+
 function resetAI(){
 	disableButtons();
-	showMessage(resetMessageStart);
-	getRequest("/reset-ai", enableButtons);
+	clearMessages();
+	toggleResetButton()
+	getRequest("/reset-ai", processReset);
 }
 
 /////////////////////////////////////////////

@@ -23,8 +23,8 @@ body{
 	clear: both;
 }
 
-.hidden{
-	opacity: 0;
+#message-box > .hidden{
+	display: none;
 }
 
 #main-container{
@@ -252,12 +252,12 @@ a{
 	transition: all 0.3s ease-out;
 }
 
-.simulating{
+.simulating, .resetting{
 	text-align: left;
 	padding-left: 25px;
 }
 
-.simulating:after{
+.simulating:after, .resetting:after{
 	text-align: left;
 	overflow: hidden;
 	display: inline-block;
@@ -452,7 +452,7 @@ a{
 		text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.75);
 	}
 
-	.simulating{
+	.simulating, .resetting{
 		text-align: left;
 		padding-left: 7px;
 	}
@@ -587,7 +587,7 @@ a{
 		text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.75);
 	}
 
-	.simulating{
+	.simulating, .resetting{
 		text-align: left;
 		padding-left: 7px;
 	}
