@@ -1,4 +1,4 @@
-[##Live Demo](http://rl-tictactoe.us-east-2.elasticbeanstalk.com)
+[## Live Demo](http://rl-tictactoe.us-east-2.elasticbeanstalk.com)
 
 **Technologies Used**
 ---
