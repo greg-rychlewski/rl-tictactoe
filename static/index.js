@@ -37,19 +37,19 @@ function toPercent(decimal){
 }
 
 function showMessage(msg, infoIcon, elementId){
-	if (infoIcon === undefined) {
+	if (infoIcon === undefined){
 		infoIcon = false;
-    }
+	}
 
-	if (elementId === undefined) {
+	if (elementId === undefined){
 		elementId = "message";
-    }
+	}
 
-    if (infoIcon){
-    	messageInfo.classList.remove("hidden");
-    }else{
-    	messageInfo.classList.add("hidden");
-    }
+	if (infoIcon){
+		messageInfo.classList.remove("hidden");
+	}else{
+		messageInfo.classList.add("hidden");
+	}
 
 	document.getElementById(elementId).innerHTML = msg;
 }
@@ -59,9 +59,9 @@ function getBox(row, col){
 }
 
 function clearMessages(messages){
-	if (messages === undefined) {
+	if (messages === undefined){
 		messages = messageBoxes;
-    }
+	}
 
 	if (Array.isArray(messages)){
 		var messages = [messages];
@@ -90,7 +90,7 @@ function clearBoard(){
 function disableButtons(buttons){
 	if (buttons === undefined) {
 		buttons = gameButtons;
-    }
+	}
 
 	if (!Array.isArray(buttons)){
 		var buttons = [buttons];
@@ -108,7 +108,7 @@ function disableButtons(buttons){
 function enableButtons(buttons){
 	if (buttons === undefined) {
 		buttons = gameButtons;
-    }
+	}
 
 	if (!Array.isArray(buttons)){
 		var buttons = [buttons];
